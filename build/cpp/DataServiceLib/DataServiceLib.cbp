@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="DataServiceLib"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="clang"/>
+		<Option virtualFolders="CMake Files\;CMake Files\cpp\;CMake Files\cpp\DataServiceLib\;CMake Files\cpp\MetricsLib\;CMake Files\cpp\YAPMApp\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="testDataService">
+				<Option output="/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/testDataService" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/home/mwinkler/Repositories/YAPM/cpp/DataServiceLib/include"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/c++/7.3.0"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/x86_64-linux-gnu/c++/7.3.0"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/c++/7.3.0/backward"/>
+					<Add directory="/usr/include/clang/6.0.0/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/llvm-6.0/lib/clang/6.0.0/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 testDataService"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="testDataService/fast">
+				<Option output="/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/testDataService" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/home/mwinkler/Repositories/YAPM/cpp/DataServiceLib/include"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/c++/7.3.0"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/x86_64-linux-gnu/c++/7.3.0"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/c++/7.3.0/backward"/>
+					<Add directory="/usr/include/clang/6.0.0/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/llvm-6.0/lib/clang/6.0.0/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 testDataService/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dataservicelib">
+				<Option output="/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/libdataservicelib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/home/mwinkler/Repositories/YAPM/cpp/DataServiceLib/include"/>
+					<Add directory="/home/mwinkler/Repositories/YAPM/cpp/DataServiceLib/src"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/c++/7.3.0"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/x86_64-linux-gnu/c++/7.3.0"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/c++/7.3.0/backward"/>
+					<Add directory="/usr/include/clang/6.0.0/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/llvm-6.0/lib/clang/6.0.0/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 dataservicelib"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dataservicelib/fast">
+				<Option output="/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/libdataservicelib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/home/mwinkler/Repositories/YAPM/cpp/DataServiceLib/include"/>
+					<Add directory="/home/mwinkler/Repositories/YAPM/cpp/DataServiceLib/src"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/c++/7.3.0"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/x86_64-linux-gnu/c++/7.3.0"/>
+					<Add directory="/usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/c++/7.3.0/backward"/>
+					<Add directory="/usr/include/clang/6.0.0/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/llvm-6.0/lib/clang/6.0.0/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 dataservicelib/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/mwinkler/Repositories/YAPM/build/cpp/DataServiceLib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/mwinkler/Repositories/YAPM/cpp/DataServiceLib/src/dataservicelib.cpp">
+			<Option target="dataservicelib"/>
+		</Unit>
+		<Unit filename="/home/mwinkler/Repositories/YAPM/cpp/DataServiceLib/test/testinterface.cpp">
+			<Option target="testDataService"/>
+		</Unit>
+		<Unit filename="/home/mwinkler/Repositories/YAPM/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/mwinkler/Repositories/YAPM/cpp/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\cpp\"/>
+		</Unit>
+		<Unit filename="/home/mwinkler/Repositories/YAPM/cpp/DataServiceLib/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\cpp\DataServiceLib\"/>
+		</Unit>
+		<Unit filename="/home/mwinkler/Repositories/YAPM/cpp/MetricsLib/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\cpp\MetricsLib\"/>
+		</Unit>
+		<Unit filename="/home/mwinkler/Repositories/YAPM/cpp/YAPMApp/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\cpp\YAPMApp\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
