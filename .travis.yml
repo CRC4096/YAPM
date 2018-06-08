@@ -7,12 +7,12 @@ matrix:
     - os: linux
       dist: trusty
       compiler: clang
-      addons: &clang60
-        apt:
-          source:
-          - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-6.0 main'
-            key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
-          packages: ['clang-6.0','lldb-4.0']
+  #    addons: &clang60
+  #      apt:
+  #        source:
+  #        - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-6.0 main'
+   #         key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+   #       packages: ['clang-6.0','lldb-4.0']
       env: COMPILER='clang++-6.0' BUILD_TYPE='Release'
 
 install:
