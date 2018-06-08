@@ -3,35 +3,16 @@ sudo: required
 
 matrix:
   include:
-
-    # Linux C++17 GCC builds
-    - os: linux
-      compiler: gcc
-      addons: &gcc8
-        apt:
-          sources: ['ubuntu-toolchain-r-test']
-          packages: ['g++-8']
-      env: COMPILER='g++-8' BUILD_TYPE='Release'
-
-    - os: linux
-      compiler: gcc
-      addons: *gcc8
-      env: COMPILER='g++-8' BUILD_TYPE='Debug'
-
     # Linux C++17 Clang builds
     - os: linux
       compiler: clang
       addons: &clang60
         apt:
-          sources: ['llvm-toolchain-xenial-6.0', 'ubuntu-toolchain-r-test']
+          source:
+          - sourceline: 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-6.0 main'
+          key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
           packages: ['clang-6.0']
       env: COMPILER='clang++-6.0' BUILD_TYPE='Release'
-
-    - os: linux
-      compiler: clang
-      addons: *clang60
-      env: COMPILER='clang++-6.0' BUILD_TYPE='Debug'
-
 
 install:
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
