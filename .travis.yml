@@ -23,7 +23,7 @@ matrix:
       compiler: clang
       addons: &clang60
         apt:
-          sources: ['llvm-toolchain-jessie-6.0', 'ubuntu-toolchain-r-test']
+          sources: ['llvm-toolchain-xenial-6.0', 'ubuntu-toolchain-r-test']
           packages: ['clang-6.0']
       env: COMPILER='clang++-6.0' BUILD_TYPE='Release'
 
