@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <string_view>
 #include <type_traits>
 
 namespace DataContainer {
@@ -14,7 +14,7 @@ enum class MeasurementUnit : short {
 
 namespace Details {
 
-//constexpr std::string MeasurementUnitToString(const MeasurementUnit unit) noexcept { return "Test"; }
+//constexpr std::string_view MeasurementUnitToString(const MeasurementUnit unit) noexcept { return "Test"; }
 constexpr double normalizeTokWh(long value, MeasurementUnit unit) noexcept{
     return normalizeTokWh(static_cast<double>(value), unit);
 }
@@ -78,7 +78,7 @@ public:
     constexpr PowerMeasurement operator /(const int value) const{ return PowerMeasurement(m_value/value, m_unit);}
     constexpr PowerMeasurement operator /(const double value) const{ return PowerMeasurement(m_value/value, m_unit);;}
 
-//    constexpr std::string toString() const noexcept{ return "Test";}
+//    constexpr std::string_view toString() const noexcept{ return "Test";}
     constexpr double getValue(const MeasurementUnit unit) const noexcept{ return Details::extendFromkWh(m_value, unit);}
 
     constexpr void setValue(double value, const MeasurementUnit unit) noexcept{
