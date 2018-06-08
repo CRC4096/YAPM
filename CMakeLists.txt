@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
+project(YAPM VERSION 0.1 LANGUAGES CXX)
 
 option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" FALSE)
 
