@@ -11,7 +11,7 @@ matrix:
         apt:
           source:
           - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-6.0 main'
-          key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+            key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
           packages: ['clang-6.0' 'lldb-4.0']
       env: COMPILER='clang++-6.0' BUILD_TYPE='Release'
 
@@ -26,6 +26,7 @@ install:
     elif [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
       which cmake || brew install cmake
     fi
+    
 before_install:
   - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
   - sudo apt-add-repository 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-6.0 main'
