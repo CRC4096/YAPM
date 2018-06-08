@@ -11,6 +11,7 @@ cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
 # Targets that we develop here
 enable_testing()
+add_subdirectory(libs)
 add_subdirectory(DataContainer)
 add_subdirectory(DataServiceLib)
 add_subdirectory(MetricsLib)

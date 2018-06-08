@@ -2,7 +2,7 @@
 project(DataContainerLib VERSION 0.1 LANGUAGES CXX)
 
 add_library(dataContainerLib
-    src/dataContainer.cpp
+    src/powermeasurement.cpp
   )
 
 # Define headers for this library. PUBLIC headers are used for
@@ -16,8 +16,7 @@ target_include_directories(dataContainerLib PUBLIC
 # If we have compiler requirements for this library, list them
 # here
 target_compile_features(dataContainerLib
-    PUBLIC cxx_auto_type
-    PRIVATE cxx_variadic_templates)
+    PRIVATE cxx_std_17)
 
 # Depend on a library that we defined in the top-level file
 #target_link_libraries(lib
@@ -41,9 +40,12 @@ export(TARGETS dataContainerLib FILE MyLibraryConfig.cmake)
 
 # Every library has unit tests, of course
 add_executable(testDataContainerLib
-    test/testBasicInterface.cpp)
+    test/main.cpp
+    test/pwrmsrcontainertest)
 
 target_link_libraries(testDataContainerLib
-    dataContainerLib)
+    dataContainerLib gtest gtest_main)
+target_compile_features(testDataContainerLib
+    PRIVATE cxx_std_17)
 
 add_test(testDataContainerLib testDataContainer)
