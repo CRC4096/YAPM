@@ -7,4 +7,4 @@ Yet Another Power Measurement is the frontend part of a small project I work on 
 
 
 ## libraries used
-- [googletest](https://github.com/google/googletest) for a moderm log system. (as submodule)
+- [googletest](https://github.com/google/googletest) for unit tests (as submodule)
