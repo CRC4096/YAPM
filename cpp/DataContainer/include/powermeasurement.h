@@ -78,7 +78,7 @@ public:
     constexpr PowerMeasurement operator /(const int value) const{ return PowerMeasurement(m_value/value, m_unit);}
     constexpr PowerMeasurement operator /(const double value) const{ return PowerMeasurement(m_value/value, m_unit);;}
 
-//    constexpr std::string_view toString() const noexcept{ return "Test";}
+    constexpr std::string_view toString() const noexcept{ return "Test";}
     constexpr double getValue(const MeasurementUnit unit) const noexcept{ return Details::extendFromkWh(m_value, unit);}
 
     constexpr void setValue(double value, const MeasurementUnit unit) noexcept{
