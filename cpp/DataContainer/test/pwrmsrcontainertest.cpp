@@ -25,7 +25,14 @@ TEST(PowerMeasurementContainerTest, TestIntegralConstructor) {
 }
 
 TEST(PowerMeasurementContainerTest, TestFloatingPointConstrutor) {
+    double d = 15.12345;
+    float f = 16.54321;
+    MeasurementUnit unit = MeasurementUnit::kWh;
+    PowerMeasurement dPM(d, unit);
+    PowerMeasurement fPM(f, unit);
 
+    ASSERT_EQ(dPM.getValue(unit), d);
+    ASSERT_EQ(fPM.getValue(unit), f);
 }
 
 TEST(PowerMeasurementContainerTest, TestMoveAndCopyConstructor) {
