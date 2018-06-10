@@ -79,10 +79,10 @@ public:
 
     constexpr PowerMeasurement operator +(const PowerMeasurement &measurement) const noexcept{ return PowerMeasurement(this->getValue(this->m_unit) + measurement.getValue(this->m_unit), this->m_unit);}
     constexpr PowerMeasurement operator -(const PowerMeasurement &measurement) const noexcept{ return PowerMeasurement(this->getValue(this->m_unit) - measurement.getValue(this->m_unit), this->m_unit);}
-    constexpr PowerMeasurement operator *(const int value) const noexcept{ return PowerMeasurement(m_value*value, m_unit);}
-    constexpr PowerMeasurement operator *(const double value) const noexcept{ return PowerMeasurement(m_value*value, m_unit);}
-    constexpr PowerMeasurement operator /(const int value) const{ return PowerMeasurement(m_value/value, m_unit);}
-    constexpr PowerMeasurement operator /(const double value) const{ return PowerMeasurement(m_value/value, m_unit);;}
+    constexpr PowerMeasurement operator *(const int value) const noexcept{ return PowerMeasurement(this->getValue(m_unit)*value, m_unit);}
+    constexpr PowerMeasurement operator *(const double value) const noexcept{ return PowerMeasurement(this->getValue(m_unit)*value, m_unit);}
+    constexpr PowerMeasurement operator /(const int value) const{ return PowerMeasurement(this->getValue(m_unit)/value, m_unit);}
+    constexpr PowerMeasurement operator /(const double value) const{ return PowerMeasurement(this->getValue(m_unit)/value, m_unit);}
 
     constexpr double getValue(const PowerUnit unit) const noexcept{ return Details::extendFromkWh(m_value, unit);}
 

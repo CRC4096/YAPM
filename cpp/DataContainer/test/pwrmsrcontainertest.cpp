@@ -4,6 +4,16 @@
 
 using namespace DataContainer;
 
+
+TEST(PowerMeasurementContainerTest, TestConstexpr){
+    PowerMeasurement PM(5, PowerUnit::kWh);
+    //This is the real test. If this compiles PowerMeasurement is constexpr
+    double test[static_cast<int>(PM.getValue(PowerUnit::kWh))];
+    test[2] = PM.getValue(PowerUnit::Wh);
+
+    ASSERT_EQ(test[2], PM.getValue(PowerUnit::Wh));
+}
+
 /*
  *  Constructor and assignment tests
  */
@@ -227,26 +237,113 @@ TEST(PowerMeasurementContainerTest, TestUnequal_DifferenUnits) {
  */
 
 TEST(PowerMeasurementContainerTest, TestPlusOperator) {
+    PowerMeasurement a(10, PowerUnit::kWh);
+    PowerMeasurement b(5000, PowerUnit::Wh);
+
+    ASSERT_EQ(a+a, PowerMeasurement(20, PowerUnit::kWh));
+    ASSERT_EQ(a+a, PowerMeasurement(20000, PowerUnit::Wh));
+    ASSERT_EQ(b+b, PowerMeasurement(10, PowerUnit::kWh));
+    ASSERT_EQ(b+b, PowerMeasurement(10000, PowerUnit::Wh));
+    ASSERT_EQ(a+b, PowerMeasurement(15, PowerUnit::kWh));
+    ASSERT_EQ(a+b, PowerMeasurement(15000, PowerUnit::Wh));
+    ASSERT_EQ(b+a, PowerMeasurement(15, PowerUnit::kWh));
+    ASSERT_EQ(b+a, PowerMeasurement(15000, PowerUnit::Wh));
 }
 
 TEST(PowerMeasurementContainerTest, TestMinusOperator) {
+    PowerMeasurement a(10, PowerUnit::kWh);
+    PowerMeasurement b(5000, PowerUnit::Wh);
+
+    ASSERT_EQ(a-a, PowerMeasurement(0, PowerUnit::kWh));
+    ASSERT_EQ(a-a, PowerMeasurement(0, PowerUnit::Wh));
+    ASSERT_EQ(b-b, PowerMeasurement(0, PowerUnit::kWh));
+    ASSERT_EQ(b-b, PowerMeasurement(0, PowerUnit::Wh));
+    ASSERT_EQ(a-b, PowerMeasurement(5, PowerUnit::kWh));
+    ASSERT_EQ(a-b, PowerMeasurement(5000, PowerUnit::Wh));
+    ASSERT_EQ(b-a, PowerMeasurement(-5, PowerUnit::kWh));
+    ASSERT_EQ(b-a, PowerMeasurement(-5000, PowerUnit::Wh));
 
 }
 
 TEST(PowerMeasurementContainerTest, TestIntegralMultiplication) {
+    PowerMeasurement PM_kWH(10, PowerUnit::kWh);
+    PowerMeasurement PM_WH(20000, PowerUnit::Wh);
 
+    ASSERT_EQ(PM_kWH*2, PowerMeasurement(20, PowerUnit::kWh));
+    ASSERT_EQ(PM_kWH*2, PowerMeasurement(20000, PowerUnit::Wh));
+    ASSERT_EQ(PM_WH*2, PowerMeasurement(40, PowerUnit::kWh));
+    ASSERT_EQ(PM_WH*2, PowerMeasurement(40000, PowerUnit::Wh));
+
+    ASSERT_EQ(PM_kWH*0, PowerMeasurement(0, PowerUnit::kWh));
+    ASSERT_EQ(PM_kWH*0, PowerMeasurement(0, PowerUnit::Wh));
+    ASSERT_EQ(PM_WH*0, PowerMeasurement(0, PowerUnit::kWh));
+    ASSERT_EQ(PM_WH*0, PowerMeasurement(0, PowerUnit::Wh));
+
+    ASSERT_EQ(PM_kWH*-2, PowerMeasurement(-20, PowerUnit::kWh));
+    ASSERT_EQ(PM_kWH*-2, PowerMeasurement(-20000, PowerUnit::Wh));
+    ASSERT_EQ(PM_WH*-2, PowerMeasurement(-40, PowerUnit::kWh));
+    ASSERT_EQ(PM_WH*-2, PowerMeasurement(-40000, PowerUnit::Wh));
 }
 
-TEST(PowerMeasurementContainerTest, TestFloatingPointMultiplicatoin) {
+TEST(PowerMeasurementContainerTest, TestFloatingPointMultiplication) {
+    PowerMeasurement PM_kWH(10, PowerUnit::kWh);
+    PowerMeasurement PM_WH(20000, PowerUnit::Wh);
+
+    ASSERT_EQ(PM_kWH*0.5, PowerMeasurement(5, PowerUnit::kWh));
+    ASSERT_EQ(PM_kWH*0.5, PowerMeasurement(5000, PowerUnit::Wh));
+    ASSERT_EQ(PM_WH*0.5, PowerMeasurement(10, PowerUnit::kWh));
+    ASSERT_EQ(PM_WH*0.5, PowerMeasurement(10000, PowerUnit::Wh));
+
+    ASSERT_EQ(PM_kWH*0.0, PowerMeasurement(0, PowerUnit::kWh));
+    ASSERT_EQ(PM_kWH*0.0, PowerMeasurement(0, PowerUnit::Wh));
+    ASSERT_EQ(PM_WH*0.0, PowerMeasurement(0, PowerUnit::kWh));
+    ASSERT_EQ(PM_WH*0.0, PowerMeasurement(0, PowerUnit::Wh));
+
+    ASSERT_EQ(PM_kWH*-0.5, PowerMeasurement(-5, PowerUnit::kWh));
+    ASSERT_EQ(PM_kWH*-0.5, PowerMeasurement(-5000, PowerUnit::Wh));
+    ASSERT_EQ(PM_WH*-0.5, PowerMeasurement(-10, PowerUnit::kWh));
+    ASSERT_EQ(PM_WH*-0.5, PowerMeasurement(-10000, PowerUnit::Wh));
 
 }
 
 TEST(PowerMeasurementContainerTest, TestIntegralDivison) {
+    PowerMeasurement PM_kWH(10, PowerUnit::kWh);
+    PowerMeasurement PM_WH(20000, PowerUnit::Wh);
 
+    ASSERT_EQ(PM_kWH/5, PowerMeasurement(2, PowerUnit::kWh));
+    ASSERT_EQ(PM_kWH/5, PowerMeasurement(2000, PowerUnit::Wh));
+    ASSERT_EQ(PM_WH/5, PowerMeasurement(4, PowerUnit::kWh));
+    ASSERT_EQ(PM_WH/5, PowerMeasurement(4000, PowerUnit::Wh));
+
+    ASSERT_EQ(PM_kWH/1, PM_kWH);
+    ASSERT_EQ(PM_kWH/1, PM_kWH);
+    ASSERT_EQ(PM_WH/1, PM_WH);
+    ASSERT_EQ(PM_WH/1, PM_WH);
+
+    ASSERT_EQ(PM_kWH/-5, PowerMeasurement(-2, PowerUnit::kWh));
+    ASSERT_EQ(PM_kWH/-5, PowerMeasurement(-2000, PowerUnit::Wh));
+    ASSERT_EQ(PM_WH/-5, PowerMeasurement(-4, PowerUnit::kWh));
+    ASSERT_EQ(PM_WH/-5, PowerMeasurement(-4000, PowerUnit::Wh));
 }
 
 TEST(PowerMeasurementContainerTest, TestFloatingPointDivison) {
+    PowerMeasurement PM_kWH(15, PowerUnit::kWh);
+    PowerMeasurement PM_WH(30000, PowerUnit::Wh);
 
+    ASSERT_EQ(PM_kWH/1.5, PowerMeasurement(10, PowerUnit::kWh));
+    ASSERT_EQ(PM_kWH/1.5, PowerMeasurement(10000, PowerUnit::Wh));
+    ASSERT_EQ(PM_WH/1.5, PowerMeasurement(20, PowerUnit::kWh));
+    ASSERT_EQ(PM_WH/1.5, PowerMeasurement(20000, PowerUnit::Wh));
+
+    ASSERT_EQ(PM_kWH/1.0, PM_kWH);
+    ASSERT_EQ(PM_kWH/1.0, PM_kWH);
+    ASSERT_EQ(PM_WH/1.0, PM_WH);
+    ASSERT_EQ(PM_WH/1.0, PM_WH);
+
+    ASSERT_EQ(PM_kWH/-0.5, PowerMeasurement(-30, PowerUnit::kWh));
+    ASSERT_EQ(PM_kWH/-0.5, PowerMeasurement(-30000, PowerUnit::Wh));
+    ASSERT_EQ(PM_WH/-0.5, PowerMeasurement(-60, PowerUnit::kWh));
+    ASSERT_EQ(PM_WH/-0.5, PowerMeasurement(-60000, PowerUnit::Wh));
 }
 
 /*
