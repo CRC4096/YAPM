@@ -3,48 +3,32 @@
 
 namespace DataContainer {
 
-
-
-//enum class PowerUnit : short {
-//    Wh,
-//    kWh
-//};
-class PowerUnit {
-public:
-    enum Units{
-        Wh,
-        kWh
-    };
-
-    constexpr PowerUnit(Units unit) : m_unit(unit){}
-    constexpr double getFaktorBasedTokWh() const{
-        switch (m_unit) {
-        case Units::Wh:
-            return 1000.0;
-        case Units::kWh:
-             return 1.0;
-        }
-    }
-
-
-private:
-    Units m_unit;
+struct kWh {
+   constexpr static const double factorTokWh = 1.0;
 };
+
+struct Wh {
+    constexpr static const double factorTokWh = 1000.0;
+};
+
 
 namespace Details {
 
-constexpr double normalizeTokWh(long value, PowerUnit unit) noexcept{
-    return normalizeTokWh(static_cast<double>(value), unit);
+template<typename PowerUnit>
+constexpr double normalizeTokWh(long value) noexcept{
+    return normalizeTokWh<PowerUnit>(static_cast<double>(value));
 }
 
-constexpr double normalizeTokWh(double value, PowerUnit unit) noexcept{
+template<typename PowerUnit>
+constexpr double normalizeTokWh(double value) noexcept{
     if(value == 0)return value;
-    return value / unit.getFaktorBasedTokWh();
+    return value / PowerUnit::factorTokWh;
 }
 
-constexpr double extendFromkWh(double value, PowerUnit unit) noexcept {
+template<typename PowerUnit>
+constexpr double extendFromkWh(double value) noexcept {
     if(value == 0) return value;
-    return value * unit.getFaktorBasedTokWh();
+    return value * PowerUnit::factorTokWh;
 
 }
 } //namespace Details
@@ -58,43 +42,44 @@ private:
     double m_value;
 };
 
+template<typename PowerUnit = kWh>
 class PowerMeasurement
 {
 public:
     //    constexpr PowerMeasurement() noexcept;
-    constexpr PowerMeasurement() noexcept :m_value(0), m_unit(PowerUnit::kWh)  {}
-    constexpr PowerMeasurement(PowerMeasurementValue value, PowerUnit unit = PowerUnit::kWh) noexcept: m_value(Details::normalizeTokWh(value.get(), unit)), m_unit(unit) {}
+    constexpr PowerMeasurement() noexcept :m_value(0)  {}
+    constexpr PowerMeasurement(PowerMeasurementValue value) noexcept: m_value(Details::normalizeTokWh<PowerUnit>(value.get())) {}
     constexpr PowerMeasurement(const PowerMeasurement&) noexcept = default;
     constexpr PowerMeasurement(PowerMeasurement&&) noexcept = default;
 
     constexpr PowerMeasurement& operator=(const PowerMeasurement&)noexcept = default;
     constexpr PowerMeasurement& operator=(PowerMeasurement&&)noexcept = default;
 
-    constexpr bool operator >(const PowerMeasurement &measurement) const noexcept { return this->getValue(PowerUnit::kWh) > measurement.getValue(PowerUnit::kWh);}
-    constexpr bool operator >=(const PowerMeasurement &measurement) const noexcept{ return this->getValue(PowerUnit::kWh) >= measurement.getValue(PowerUnit::kWh);}
-    constexpr bool operator <(const PowerMeasurement &measurement) const noexcept{ return this->getValue(PowerUnit::kWh) < measurement.getValue(PowerUnit::kWh);}
-    constexpr bool operator <=(const PowerMeasurement &measurement) const noexcept{ return this->getValue(PowerUnit::kWh) <= measurement.getValue(PowerUnit::kWh);}
-    constexpr bool operator ==(const PowerMeasurement &measurement) const noexcept{ return this->getValue(PowerUnit::kWh) == measurement.getValue(PowerUnit::kWh);}
-    constexpr bool operator !=(const PowerMeasurement &measurement) const noexcept{ return this->getValue(PowerUnit::kWh) != measurement.getValue(PowerUnit::kWh);}
+    template<typename T> constexpr bool operator >(const PowerMeasurement<T> &measurement) const noexcept { return this->getValue<kWh>() > measurement.template getValue<kWh>();}
+    template<typename T> constexpr bool operator >=(const PowerMeasurement<T> &measurement) const noexcept{ return this->getValue<kWh>() >= measurement.template getValue<kWh>();}
+    template<typename T> constexpr bool operator <(const PowerMeasurement<T> &measurement) const noexcept { return this->getValue<kWh>() < measurement.template getValue<kWh>();}
+    template<typename T> constexpr bool operator <=(const PowerMeasurement<T> &measurement) const noexcept{ return this->getValue<kWh>() <= measurement.template getValue<kWh>();}
+    template<typename T> constexpr bool operator ==(const PowerMeasurement<T> &measurement) const noexcept{ return this->getValue<kWh>() == measurement.template getValue<kWh>();}
+    template<typename T> constexpr bool operator !=(const PowerMeasurement<T> &measurement) const noexcept{ return this->getValue<kWh>() != measurement.template getValue<kWh>();}
 
-    constexpr PowerMeasurement operator +(const PowerMeasurement &measurement) const noexcept{ return PowerMeasurement(this->getValue(this->m_unit) + measurement.getValue(this->m_unit), this->m_unit);}
-    constexpr PowerMeasurement operator -(const PowerMeasurement &measurement) const noexcept{ return PowerMeasurement(this->getValue(this->m_unit) - measurement.getValue(this->m_unit), this->m_unit);}
-    constexpr PowerMeasurement operator *(const int value) const noexcept{ return PowerMeasurement(this->getValue(m_unit)*value, m_unit);}
-    constexpr PowerMeasurement operator *(const double value) const noexcept{ return PowerMeasurement(this->getValue(m_unit)*value, m_unit);}
-    constexpr PowerMeasurement operator /(const int value) const{ return PowerMeasurement(this->getValue(m_unit)/value, m_unit);}
-    constexpr PowerMeasurement operator /(const double value) const{ return PowerMeasurement(this->getValue(m_unit)/value, m_unit);}
+    template<typename T> constexpr PowerMeasurement operator +(const PowerMeasurement<T> &measurement) const noexcept{ return PowerMeasurement<PowerUnit>(this->getValue<PowerUnit>() + measurement.template getValue<PowerUnit>());}
+    template<typename T> constexpr PowerMeasurement operator -(const PowerMeasurement<T> &measurement) const noexcept{ return PowerMeasurement<PowerUnit>(this->getValue<PowerUnit>() - measurement.template getValue<PowerUnit>());}
 
-    constexpr double getValue(const PowerUnit unit) const noexcept{ return Details::extendFromkWh(m_value, unit);}
+    constexpr PowerMeasurement operator *(const int value) const noexcept{ return PowerMeasurement<PowerUnit>(this->getValue<PowerUnit>()*value);}
+    constexpr PowerMeasurement operator *(const double value) const noexcept{ return PowerMeasurement<PowerUnit>(this->getValue<PowerUnit>()*value);}
+    constexpr PowerMeasurement operator /(const int value) const{ return PowerMeasurement<PowerUnit>(this->getValue<PowerUnit>()/value);}
+    constexpr PowerMeasurement operator /(const double value) const{ return PowerMeasurement<PowerUnit>(this->getValue<PowerUnit>()/value);}
 
-    constexpr void setValue(double value, const PowerUnit unit) noexcept{
-        this->m_value = Details::normalizeTokWh(value, unit);
-        this->m_unit = unit;
+    template<typename ReturnUnit>
+    constexpr double getValue() const noexcept{ return Details::extendFromkWh<ReturnUnit>(m_value);}
+
+    template<typename TargetPowerUnit>
+    constexpr void setValue(double value) noexcept{
+        this->m_value = Details::normalizeTokWh<TargetPowerUnit>(value);
     }
-
 
 private:
     double m_value;
-    PowerUnit m_unit;
 };
 
 
