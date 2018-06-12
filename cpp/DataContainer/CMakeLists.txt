@@ -48,4 +48,4 @@ target_link_libraries(testDataContainerLib
 target_compile_features(testDataContainerLib
     PRIVATE cxx_std_17)
 
-add_test(testDataContainerLib testDataContainer)
+add_test(testDataContainerLib testDataContainerLib)
