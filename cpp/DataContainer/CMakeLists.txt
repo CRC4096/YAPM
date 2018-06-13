@@ -3,6 +3,7 @@ project(DataContainerLib VERSION 0.1 LANGUAGES CXX)
 
 add_library(dataContainerLib
     src/powermeasurement.cpp
+    src/powervalue.cpp
   )
 
 # Define headers for this library. PUBLIC headers are used for
@@ -41,7 +42,9 @@ export(TARGETS dataContainerLib FILE MyLibraryConfig.cmake)
 # Every library has unit tests, of course
 add_executable(testDataContainerLib
     test/main.cpp
-    test/pwrmsrcontainertest)
+    test/pwrmsrcontainertest
+    test/powervaluecontainertest
+    )
 
 target_link_libraries(testDataContainerLib
     dataContainerLib gtest gtest_main)

@@ -1,86 +1,58 @@
 #pragma once
 
+#include "powervalue.h"
+#include "chrono"
 
 namespace DataContainer {
-
-struct kWh {
-   constexpr static const double factorTokWh = 1.0;
-};
-
-struct Wh {
-    constexpr static const double factorTokWh = 1000.0;
-};
-
-
-namespace Details {
+namespace Power {
 
 template<typename PowerUnit>
-constexpr double normalizeTokWh(long value) noexcept{
-    return normalizeTokWh<PowerUnit>(static_cast<double>(value));
-}
-
-template<typename PowerUnit>
-constexpr double normalizeTokWh(double value) noexcept{
-    if(value == 0)return value;
-    return value / PowerUnit::factorTokWh;
-}
-
-template<typename PowerUnit>
-constexpr double extendFromkWh(double value) noexcept {
-    if(value == 0) return value;
-    return value * PowerUnit::factorTokWh;
-
-}
-} //namespace Details
-
-class PowerMeasurementValue{
+class PowerMeasurement{
 public:
-    template<typename T>
-    constexpr PowerMeasurementValue(T value) : m_value(static_cast<double>(value)){} //static cast will enforce arithmetic types
-    constexpr double get(){return m_value;}
-private:
-    double m_value;
-};
+    // all of these durations will be part of the C++20 standard
+    using days = std::chrono::duration<int, std::ratio<86400>>;
+    using weeks = std::chrono::duration<int, std::ratio<604800>>;
+    using months = std::chrono::duration<int, std::ratio<2629746>>;
+    using years = std::chrono::duration<int, std::ratio<31556952>>;
 
-template<typename PowerUnit = kWh>
-class PowerMeasurement
-{
-public:
-    //    constexpr PowerMeasurement() noexcept;
-    constexpr PowerMeasurement() noexcept :m_value(0)  {}
-    constexpr PowerMeasurement(PowerMeasurementValue value) noexcept: m_value(Details::normalizeTokWh<PowerUnit>(value.get())) {}
-    constexpr PowerMeasurement(const PowerMeasurement&) noexcept = default;
-    constexpr PowerMeasurement(PowerMeasurement&&) noexcept = default;
+    constexpr PowerMeasurement() : m_powerValue(0), m_timestamp(std::chrono::milliseconds(0)){}
+    constexpr PowerMeasurement(const PowerValue<PowerUnit>& value, std::chrono::system_clock::time_point time) : m_powerValue(value), m_timestamp(time){}
+    constexpr PowerMeasurement(const PowerValue<PowerUnit> &value, short minute, short hour, short day, short month, short year)
+        : m_powerValue(value), m_timestamp(std::chrono::minutes(minute) + std::chrono::hours(hour) + days(day) + months(month) + years(year)) {}
+
+    constexpr PowerMeasurement(const PowerMeasurement&) = default;
+    constexpr PowerMeasurement(PowerMeasurement&&) = default;
 
     constexpr PowerMeasurement& operator=(const PowerMeasurement&)noexcept = default;
     constexpr PowerMeasurement& operator=(PowerMeasurement&&)noexcept = default;
 
-    template<typename T> constexpr bool operator >(const PowerMeasurement<T> &measurement) const noexcept { return this->getValue<kWh>() > measurement.template getValue<kWh>();}
-    template<typename T> constexpr bool operator >=(const PowerMeasurement<T> &measurement) const noexcept{ return this->getValue<kWh>() >= measurement.template getValue<kWh>();}
-    template<typename T> constexpr bool operator <(const PowerMeasurement<T> &measurement) const noexcept { return this->getValue<kWh>() < measurement.template getValue<kWh>();}
-    template<typename T> constexpr bool operator <=(const PowerMeasurement<T> &measurement) const noexcept{ return this->getValue<kWh>() <= measurement.template getValue<kWh>();}
-    template<typename T> constexpr bool operator ==(const PowerMeasurement<T> &measurement) const noexcept{ return this->getValue<kWh>() == measurement.template getValue<kWh>();}
-    template<typename T> constexpr bool operator !=(const PowerMeasurement<T> &measurement) const noexcept{ return this->getValue<kWh>() != measurement.template getValue<kWh>();}
-
-    template<typename T> constexpr PowerMeasurement operator +(const PowerMeasurement<T> &measurement) const noexcept{ return PowerMeasurement<PowerUnit>(this->getValue<PowerUnit>() + measurement.template getValue<PowerUnit>());}
-    template<typename T> constexpr PowerMeasurement operator -(const PowerMeasurement<T> &measurement) const noexcept{ return PowerMeasurement<PowerUnit>(this->getValue<PowerUnit>() - measurement.template getValue<PowerUnit>());}
-
-    constexpr PowerMeasurement operator *(const int value) const noexcept{ return PowerMeasurement<PowerUnit>(this->getValue<PowerUnit>()*value);}
-    constexpr PowerMeasurement operator *(const double value) const noexcept{ return PowerMeasurement<PowerUnit>(this->getValue<PowerUnit>()*value);}
-    constexpr PowerMeasurement operator /(const int value) const{ return PowerMeasurement<PowerUnit>(this->getValue<PowerUnit>()/value);}
-    constexpr PowerMeasurement operator /(const double value) const{ return PowerMeasurement<PowerUnit>(this->getValue<PowerUnit>()/value);}
+    template<typename T> constexpr bool operator >( const PowerMeasurement<T> &measurement) const noexcept{ return this->m_timestamp >  measurement.m_timestamp;}
+    template<typename T> constexpr bool operator >=(const PowerMeasurement<T> &measurement) const noexcept{ return this->m_timestamp >= measurement.m_timestamp;}
+    template<typename T> constexpr bool operator < (const PowerMeasurement<T> &measurement) const noexcept{ return this->m_timestamp <  measurement.m_timestamp;}
+    template<typename T> constexpr bool operator <=(const PowerMeasurement<T> &measurement) const noexcept{ return this->m_timestamp <= measurement.m_timestamp;}
+    template<typename T> constexpr bool operator ==(const PowerMeasurement<T> &measurement) const noexcept{ return this->m_timestamp == measurement.m_timestamp;}
+    template<typename T> constexpr bool operator !=(const PowerMeasurement<T> &measurement) const noexcept{ return this->m_timestamp != measurement.m_timestamp;}
 
     template<typename ReturnUnit>
-    constexpr double getValue() const noexcept{ return Details::extendFromkWh<ReturnUnit>(m_value);}
+    constexpr double getValue() const noexcept{ return m_powerValue.template getValue<ReturnUnit>();}
 
     template<typename TargetPowerUnit>
-    constexpr void setValue(double value) noexcept{
-        this->m_value = Details::normalizeTokWh<TargetPowerUnit>(value);
+    constexpr void setValue(double value) noexcept{ m_powerValue.setValue(value);}
+
+    constexpr auto getTime() const noexcept { return m_timestamp;}
+    constexpr long getTimestamp() const { return std::chrono::duration_cast<std::chrono::seconds>(m_timestamp).count();}
+    constexpr void setTime(const std::chrono::system_clock::time_point& time){ this->m_timestamp = time;}
+    constexpr void setTime(const short minute, const short hour, const short day, const short month, const short year){
+        setTime(std::chrono::minutes(minute) + std::chrono::hours(hour) + days(day) + months(month) + years(year));
     }
 
+
+
 private:
-    double m_value;
+    PowerValue<PowerUnit> m_powerValue;
+    std::chrono::system_clock::time_point m_timestamp;
 };
 
 
+}//namespace Power
 }//namespace DataContainer
