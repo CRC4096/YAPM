@@ -34,22 +34,13 @@ constexpr double extendFromkWh(double value) noexcept {
 }
 } //namespace Details
 
-class Value{
-public:
-    template<typename T>
-    constexpr Value(T value) : m_value(static_cast<double>(value)){} //static cast will enforce arithmetic types
-    constexpr double get(){return m_value;}
-private:
-    double m_value;
-};
-
 template<typename PowerUnit = kWh>
 class PowerValue
 {
 public:
     //    constexpr PowerValue() noexcept;
     constexpr PowerValue() noexcept :m_value(0)  {}
-    constexpr PowerValue(Value value) noexcept: m_value(Details::normalizeTokWh<PowerUnit>(value.get())) {}
+    template <typename T> constexpr PowerValue(T value) noexcept: m_value(Details::normalizeTokWh<PowerUnit>(static_cast<double>(value))) {}
     constexpr PowerValue(const PowerValue&) noexcept = default;
     constexpr PowerValue(PowerValue&&) noexcept = default;
 
