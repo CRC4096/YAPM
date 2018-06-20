@@ -2,7 +2,8 @@
 project(DataServiceLib VERSION 0.1 LANGUAGES CXX)
 
 add_library(dataservicelib
-    src/dataservicelib.cpp
+    src/PowerMeasurementService.cpp
+    src/impl/CsvImpl.cpp
  #  src/frob.cpp
   )
 
@@ -21,9 +22,8 @@ target_compile_features(dataservicelib
     PRIVATE cxx_variadic_templates)
 
 # Depend on a library that we defined in the top-level file
-#target_link_libraries(lib
-#    boost
-#    MyOtherLibrary)
+target_link_libraries(dataservicelib
+    dataContainerLib)
 
 # 'make install' to the correct locations (provided by GNUInstallDirs).
 #install(TARGETS lib EXPORT MyLibraryConfig
