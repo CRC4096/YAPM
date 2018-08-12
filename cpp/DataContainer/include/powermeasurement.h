@@ -6,6 +6,7 @@
 namespace DataContainer {
 namespace Power {
 
+
 template<typename PowerUnit = kWh>
 class PowerMeasurement{
 public:

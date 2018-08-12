@@ -17,7 +17,7 @@ target_include_directories(dataContainerLib PUBLIC
 # If we have compiler requirements for this library, list them
 # here
 target_compile_features(dataContainerLib
-    PRIVATE cxx_std_17)
+    PUBLIC cxx_std_17)
 
 # Depend on a library that we defined in the top-level file
 #target_link_libraries(lib

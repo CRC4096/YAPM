@@ -22,7 +22,7 @@ constexpr double normalizeTokWh(long value) noexcept{
 
 template<typename PowerUnit>
 constexpr double normalizeTokWh(double value) noexcept{
-    if(value == 0)return value;
+    if(value == 0) return value;
     return value / PowerUnit::factorTokWh;
 }
 
