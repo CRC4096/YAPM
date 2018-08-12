@@ -9,8 +9,8 @@ namespace Power {
 
 template<typename PowerUnit = kWh>
 class PowerMeasurement{
-public:
 
+public:
     constexpr PowerMeasurement() : m_powerValue(0), m_unixTimestamp(0){}
     constexpr PowerMeasurement(const PowerValue<PowerUnit> value, long unixTimestamp) : m_powerValue(value), m_unixTimestamp(unixTimestamp){}
 

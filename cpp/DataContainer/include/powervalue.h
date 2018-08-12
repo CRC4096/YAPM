@@ -30,7 +30,6 @@ template<typename PowerUnit>
 constexpr double extendFromkWh(double value) noexcept {
     if(value == 0) return value;
     return value * PowerUnit::factorTokWh;
-
 }
 } //namespace Details
 
