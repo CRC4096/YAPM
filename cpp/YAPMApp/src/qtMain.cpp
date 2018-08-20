@@ -1,9 +1,14 @@
-
-
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 #include <iostream>
+
 
 int main(int argc, char *argv[])
 {
-    std::cout << "Hello World" << std::endl;
-    return 0;
+    std::cout << "Starting YAPM" << std::endl;
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication app(argc, argv);
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/forms/main.qml")));
+    return app.exec();
 }
