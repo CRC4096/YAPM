@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/forms">
         <file>main.qml</file>
+        <file>Dashboard.qml</file>
+        <file>TablePage.qml</file>
     </qresource>
 </RCC>
