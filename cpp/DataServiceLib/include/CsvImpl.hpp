@@ -15,9 +15,6 @@ public:
     CsvPowerServiceImpl(const std::string& filename);
     ~CsvPowerServiceImpl();
 
-    // PowerMeasurmentInterface interface
-public:
-
 private:
     std::vector<PowerMeasurement<kWh>> m_dataStorage;
     const std::string m_filename;

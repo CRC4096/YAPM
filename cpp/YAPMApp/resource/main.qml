@@ -1,21 +1,31 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.3
-import QtQuick.Controls.Material 2.1
+import QtQuick.Controls.Material 2.2
 
 ApplicationWindow {
     id: window
-    width: 640
-    height: 480
+    minimumHeight: 640
+    minimumWidth: 480
     visible: true
-    title: "YAPM"
+    title: ""
 
-    Pane {
-        id:view
+    Material.theme: Material.Dark
+//    Material.accent: Material.BlueGrey
+//    Material.primary:
+
+    Loader {
+        anchors.fill: parent
+//        anchors.top: parent.top
+//        anchors.left: parent.left
+//        anchors.right: parent.right
+
+        id: pageLoader
+        source: "/forms/Dashboard.qml"
     }
 
     header: ToolBar {
-        Material.foreground: "white"
+
 
         RowLayout {
             spacing: 20
@@ -28,7 +38,7 @@ ApplicationWindow {
 
             Label {
                 id: titleLabel
-                text: listView.currentItem ? listView.currentItem.text : "Gallery"
+                text: "Yet Another Power Manager"
                 font.pixelSize: 20
                 elide: Label.ElideRight
                 horizontalAlignment: Qt.AlignHCenter
@@ -64,7 +74,7 @@ ApplicationWindow {
             id: listView
 
             focus: true
-            currentIndex: 1
+            currentIndex: 0
             anchors.fill: parent
 
             delegate: ItemDelegate {
@@ -73,18 +83,36 @@ ApplicationWindow {
                 highlighted: ListView.isCurrentItem
                 onClicked: {
                     listView.currentIndex = index
-//                    view.contentItem = model.source
+                    pageLoader.source = model.source
                     drawer.close()
                 }
             }
 
             model: ListModel {
-                ListElement { title: "Dashboard"; source: "qrc:/forms/Dashboard.qml" }
-                ListElement { title: "Daten"; source: "qrc:/forms/TablePage.qml" }
+                ListElement { title: "Dashboard"; source: "/forms/Dashboard.qml" }
+                ListElement { title: "Daten"; source: "/forms/TablePage.qml" }
             }
 
             ScrollIndicator.vertical: ScrollIndicator { }
         }
+    }
+
+
+    RoundButton {
+        text: qsTr("+")
+        highlighted: true
+        anchors.margins: 10
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        onClicked: {
+            measurementsDialog.createMeasurement()
+            console.log("Opening MeasurementDialog")
+        }
+    }
+
+
+    MeasurementDialog {
+        id: measurementsDialog
     }
 
     Dialog {
@@ -120,3 +148,4 @@ ApplicationWindow {
     }
 
 }
+

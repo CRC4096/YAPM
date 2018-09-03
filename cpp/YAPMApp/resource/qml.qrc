@@ -3,5 +3,8 @@
         <file>main.qml</file>
         <file>Dashboard.qml</file>
         <file>TablePage.qml</file>
+        <file>DashboardLine.qml</file>
+        <file>MeasurementDialog.qml</file>
+        <file>MeasurementDialogForm.ui.qml</file>
     </qresource>
 </RCC>
