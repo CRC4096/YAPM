@@ -5,6 +5,8 @@
 
 #include "powermeasurement.h"
 
+class QDateTime;
+
 class PowerMeasurementModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -29,7 +31,7 @@ public:
     //Custom Invokable functions
     Q_INVOKABLE void sortDescending(bool value);
     Q_INVOKABLE QVariantMap get(int row) const;
-    Q_INVOKABLE void append();
+    Q_INVOKABLE void append(QString date, QString value);
     Q_INVOKABLE void set();
     Q_INVOKABLE void remove();
 
@@ -41,6 +43,7 @@ private:
 
     QString timestampToString(long unixTimeStamp) const;
     long stringToTimestamp(const QString& text) const;
+    long dateToTimestamp(const QDateTime& date) const;
 
     std::vector<DataRow> m_data;
 };

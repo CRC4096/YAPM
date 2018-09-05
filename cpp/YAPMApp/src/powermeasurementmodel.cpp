@@ -1,5 +1,7 @@
 #include "powermeasurementmodel.h"
 #include <QDateTime>
+#include <QRegularExpression>
+#include <QtDebug>
 
 PowerMeasurementModel::PowerMeasurementModel(QObject *parent) : QAbstractListModel (parent), m_data()
 {
@@ -47,8 +49,18 @@ QVariantMap PowerMeasurementModel::get(int row) const
         {"Zeitstempel", QVariant(static_cast<int>(data.measurement.getUnixTimestamp()))} };
 }
 
-void PowerMeasurementModel::append()
+void PowerMeasurementModel::append(QString date, QString value)
 {
+    qDebug() << "Test\nDate : " << date << "\nValue: " << value << "\n";
+    auto convertedDate = QDateTime::fromString(date);
+    double convertedValue = value.remove(QRegularExpression("[^0-9].")).toDouble();
+    qDebug() << "Test\nDate : " << convertedDate.toString(Qt::DateFormat::ISODateWithMs) << "\nValue: " << convertedValue << "\n";
+
+    long timestamp = dateToTimestamp(convertedDate);
+    qDebug() << "Timestamp: " << timestamp;
+
+    PwrContainer container(convertedValue, timestamp);
+    m_data.push_back(DataRow{container});
 
 }
 
@@ -71,6 +83,11 @@ QString PowerMeasurementModel::timestampToString(long unixTimeStamp) const
 
 long PowerMeasurementModel::stringToTimestamp(const QString &text) const
 {
-    return static_cast<long>(QDateTime::fromString(text, Qt::DateFormat::ISODate).toTime_t());
+    return dateToTimestamp(QDateTime::fromString(text, Qt::DateFormat::ISODate));
+}
+
+long PowerMeasurementModel::dateToTimestamp(const QDateTime &date) const
+{
+    return static_cast<long>(date.toTime_t());
 }
 

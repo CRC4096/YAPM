@@ -1,19 +1,23 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.1
 
+import YAPM.PwrMsrWrapper 1.0
+
 Dialog {
     id: measDialog
+    width: 400
+    height: 400
 
-//    signal finished(string fullName, string address, string city, string number)
+    signal finished()
 
     function createMeasurement() {
-//        form.valueField.text = ""
-//        dialog.title = qsTr("Add Measurement");
+        form.valueField.text = ""
+        measDialog.title = qsTr("Add Measurement");
         measDialog.open();
     }
 
-//    x: parent.width / 2 - width / 2
-//    y: parent.height / 2 - height / 2
+    x: parent.width / 2 - width / 2
+    y: parent.height / 2 - height / 2
 
     focus: true
     modal: true
@@ -21,10 +25,15 @@ Dialog {
     standardButtons: Dialog.Ok | Dialog.Cancel
 
     contentItem: MeasurementDialogForm {
-//        id: form
+        id: form
     }
 
-//    onAccepted: finished(form.fullName.text, form.address.text, form.city.text, form.number.text)
+    onAccepted: {
+        var consumption = form.valueField.text
+        var dateString = form.calender.selectedDate
+        PwrMsrWrapper.model.append(dateString, consumption)
+        finished()
+    }
 }
 
 /*##^## Designer {

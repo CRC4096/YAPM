@@ -6,5 +6,6 @@
         <file>DashboardLine.qml</file>
         <file>MeasurementDialog.qml</file>
         <file>MeasurementDialogForm.ui.qml</file>
+        <file>PwrMsrWrapper.qml</file>
     </qresource>
 </RCC>

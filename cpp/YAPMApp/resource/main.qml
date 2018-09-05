@@ -1,4 +1,5 @@
 import QtQuick 2.9
+import QtQml 2.11
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.3
 import QtQuick.Controls.Material 2.2
@@ -11,14 +12,14 @@ ApplicationWindow {
     title: ""
 
     Material.theme: Material.Dark
-//    Material.accent: Material.BlueGrey
-//    Material.primary:
+    //    Material.accent: Material.BlueGrey
+    //    Material.primary:
 
     Loader {
         anchors.fill: parent
-//        anchors.top: parent.top
-//        anchors.left: parent.left
-//        anchors.right: parent.right
+        //        anchors.top: parent.top
+        //        anchors.left: parent.left
+        //        anchors.right: parent.right
 
         id: pageLoader
         source: "/forms/Dashboard.qml"
@@ -97,6 +98,17 @@ ApplicationWindow {
         }
     }
 
+    Connections
+    {
+        target: measurementsDialog
+        onFinished: {
+            console.log("Acceppted MeasurementDialog")
+            var tempSource = pageLoader.source
+            pageLoader.source = "" //reload loader
+            pageLoader.source = tempSource
+        }
+    }
+
 
     RoundButton {
         text: qsTr("+")
@@ -107,6 +119,7 @@ ApplicationWindow {
         onClicked: {
             measurementsDialog.createMeasurement()
             console.log("Opening MeasurementDialog")
+            //reloading of the page happens at the connection above
         }
     }
 

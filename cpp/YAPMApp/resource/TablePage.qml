@@ -2,7 +2,8 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.11
-import PowerMeasurementModel 1.0
+
+import YAPM.PwrMsrWrapper 1.0
 
 
 ListView {
@@ -107,9 +108,7 @@ ListView {
         //        }
     }
 
-    model: PowerMeasurementModel {
-        id: model
-    }
+    model: PwrMsrWrapper.model
 
     ScrollBar.vertical: ScrollBar { }
 }

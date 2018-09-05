@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
+#include <QtQml>
 #include <iostream>
 
 #include "powermeasurementmodel.h"
@@ -17,6 +18,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<PowerMeasurementModel>("PowerMeasurementModel", 1, 0, "PowerMeasurementModel");
+    qmlRegisterSingletonType(QUrl("qrc:/forms/PwrMsrWrapper.qml"), "YAPM.PwrMsrWrapper", 1, 0, "PwrMsrWrapper");
 
     QQuickStyle::setStyle("Material");
 
