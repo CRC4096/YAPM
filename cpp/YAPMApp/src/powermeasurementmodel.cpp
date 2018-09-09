@@ -123,5 +123,6 @@ size_t PowerMeasurementModel::findInsertionPlace(const DataRow &row)
         if(row > m_data.at(i))
             return i;
     }
+    return m_data.size();
 }
 

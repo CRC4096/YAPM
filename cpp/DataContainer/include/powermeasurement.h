@@ -23,7 +23,8 @@ public:
     }
     template <typename T> constexpr PowerMeasurement& operator=(PowerMeasurement<T>&& m)noexcept {
         this->m_powerValue.operator=(std::move(m.template getValue<PowerUnit>));
-        this->m_unixTimestamp.operator=(std::move(m.getUnixTimestamp()));
+//        this->m_unixTimestamp.operator=(std::move(m.getUnixTimestamp())); won't compile with gcc 8
+        this->m_unixTimestamp = std::move(m.getUnixTimestamp());
     }
 
     template<typename T> constexpr bool operator >( const PowerMeasurement<T> &m) const noexcept{ return (this->m_unixTimestamp == m.getUnixTimestamp() ? this->getValue<kWh>() >  m.template getValue<kWh>() : this->m_unixTimestamp >  m.getUnixTimestamp());}
