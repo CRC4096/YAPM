@@ -33,7 +33,7 @@ before_install:
   - sudo apt-add-repository -y 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-6.0 main'
   - sudo apt-add-repository -y 'http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu trusty main'
   - sudo apt-get update
-  - sudo apt-get install -y libstdc++-8-dev clang-6.0 qt5-default qtdeclarative5-dev
+  - sudo apt-get install -y libstdc++-8-dev clang-6.0 qt5-default qtdeclarative5-dev qml-module-qtquick-controls
   
 before_script:
   - export CXX=${COMPILER}
