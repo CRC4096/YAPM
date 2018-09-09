@@ -10,7 +10,8 @@ then
     export CXXFLAGS="-stdlib=libc++"
 fi
 
-mkdir build && cd build
-
+cd ${TRAVIS_BUILD_DIR}
+cmake -H. -BBuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -Wdev
+cd Build
 make -j 2
 ctest -V -j 2
