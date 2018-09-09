@@ -8,7 +8,7 @@ Yet Another Power Measurement is the frontend part of a small project I work on 
 | Branch   | Build status  | Systems / Compilers |
 | -------- | ------------- | -------------------- |
 | Master | [![Build Status](https://travis-ci.com/CRC4096/YAPM.svg?branch=master)](https://travis-ci.com/CRC4096/YAPM) | Linux (clang-6.0) |
-| Development | [![Build Status](https://travis-ci.com/CRC4096/YAPM.svg?branch=development)](https://travis-ci.com/CRC4096/YAPM) | Linux (clang-6.0) |
+| Development | [![Build Status](https://travis-ci.com/CRC4096/YAPM.svg?branch=development)](https://travis-ci.com/CRC4096/YAPM) | Linux (clang-6.0) & Linux (GCC-8.0) |
 
 
 
