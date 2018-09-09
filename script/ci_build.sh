@@ -9,9 +9,8 @@ if [[ "${CXX}" == clang* ]]
 then
     export CXXFLAGS="-stdlib=libc++"
 fi
-
-cd ${TRAVIS_BUILD_DIR}
-cmake -H. -BBuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -Wdev
+ls -la
+cmake -H. -BBuild -DCMAKE_BUILD_TYPE=RELEASE -Wdev
 cd Build
 make -j 2
 ctest -V -j 2
