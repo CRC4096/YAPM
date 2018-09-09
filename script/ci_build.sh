@@ -2,13 +2,13 @@
 
 set -ex
 
-apt-get update
-apt-get install -y clang-6.0 qt5-default qtquickcontrols2-5-dev qtdeclarative5-dev
+apt update && apt -y upgrade
+apt install -y qt5-default qtquickcontrols2-5-dev qtdeclarative5-dev
 
-if [[ "${CXX}" == clang* ]]
-then
-    export CXXFLAGS="-stdlib=libc++"
-fi
+#if [[ "${CXX}" == clang* ]]
+#then
+#    export CXXFLAGS="-stdlib=libc++"
+#fi
 
 cmake -H. -BBuild -DCMAKE_BUILD_TYPE=RELEASE -Wdev
 cd Build
