@@ -1,12 +1,13 @@
-#include "powermeasurementmodel.h"
-#include <QDateTime>
+ #include "powermeasurementmodel.h"
 #include <QRegularExpression>
 #include <QtDebug>
 
 PowerMeasurementModel::PowerMeasurementModel(QObject *parent) : QAbstractListModel (parent), m_data()
 {
     for(int i = 0; i < 100; ++i)
-        m_data.push_back(DataRow( {PwrContainer(i * 100, i)}));
+        m_data.push_back(DataRow( {PwrContainer(i * 100, i * 60*60*24)}));
+
+    sortData();
 }
 
 int PowerMeasurementModel::rowCount(const QModelIndex &) const
@@ -45,33 +46,49 @@ void PowerMeasurementModel::sortDescending(bool /*value*/)
 QVariantMap PowerMeasurementModel::get(int row) const
 {
     auto data = m_data.at(static_cast<size_t>(row));
-    return { {"Strommnessung", data.measurement.getValue()},
-        {"Zeitstempel", QVariant(static_cast<int>(data.measurement.getUnixTimestamp()))} };
+    return { {"Messung", data.measurement.getValue()},
+        {"Zeit", QVariant(timestampToString(data.measurement.getUnixTimestamp()))} };
 }
 
-void PowerMeasurementModel::append(QString date, QString value)
+void PowerMeasurementModel::append(const QDateTime& date, const double value)
 {
-    qDebug() << "Test\nDate : " << date << "\nValue: " << value << "\n";
-    auto convertedDate = QDateTime::fromString(date);
-    double convertedValue = value.remove(QRegularExpression("[^0-9].")).toDouble();
-    qDebug() << "Test\nDate : " << convertedDate.toString(Qt::DateFormat::ISODateWithMs) << "\nValue: " << convertedValue << "\n";
+    DataRow row{PwrContainer(value, dateToTimestamp(date))};
+    int insertionRow = static_cast<int>(findInsertionPlace(row));
 
-    long timestamp = dateToTimestamp(convertedDate);
-    qDebug() << "Timestamp: " << timestamp;
-
-    PwrContainer container(convertedValue, timestamp);
-    m_data.push_back(DataRow{container});
-
+    beginInsertRows(QModelIndex(), insertionRow, static_cast<int>(m_data.size() - 1));
+    auto it = m_data.begin();
+    std::advance(it, insertionRow);
+    m_data.insert(it, std::move(row));
+    endInsertRows();
 }
 
-void PowerMeasurementModel::set()
+void PowerMeasurementModel::set(int row, const QDateTime& date, const double value)
 {
+    auto& line = m_data.at(static_cast<size_t>(row));
+    line.measurement.setTime(dateToTimestamp(date));
+    line.measurement.setValue(value);
 
+    beginResetModel();
+    sortData();
+    endResetModel();
 }
 
-void PowerMeasurementModel::remove()
+void PowerMeasurementModel::remove(int row)
 {
+    auto it = m_data.begin();
+    std::advance(it, row);
+    beginRemoveRows(QModelIndex(), row, row);
+    m_data.erase(it);
+    endRemoveRows();
+}
 
+PowerMeasurementModel::ConvertedData PowerMeasurementModel::convert(const QString &value, const QString &date)
+{
+    PowerMeasurementModel::ConvertedData retVal{
+        QString(value).remove(QRegularExpression("[^0-9].")).toDouble(),
+        stringToTimestamp(date)
+    };
+    return retVal;
 }
 
 
@@ -83,11 +100,28 @@ QString PowerMeasurementModel::timestampToString(long unixTimeStamp) const
 
 long PowerMeasurementModel::stringToTimestamp(const QString &text) const
 {
-    return dateToTimestamp(QDateTime::fromString(text, Qt::DateFormat::ISODate));
+    auto temp = QDateTime::fromString(text, Qt::DateFormat::ISODate);
+    return dateToTimestamp(temp);
 }
 
 long PowerMeasurementModel::dateToTimestamp(const QDateTime &date) const
 {
     return static_cast<long>(date.toTime_t());
+}
+
+void PowerMeasurementModel::sortData()
+{
+    std::sort(m_data.begin(), m_data.end(), [](const DataRow& a, const DataRow& b){
+        return a.measurement > b.measurement; //sort descending
+    });
+}
+
+size_t PowerMeasurementModel::findInsertionPlace(const DataRow &row)
+{
+    //0 will contain the biggest element. Therefor if row is bigger then i, insert at i
+    for(size_t i = 0; i < m_data.size(); ++i){
+        if(row > m_data.at(i))
+            return i;
+    }
 }
 

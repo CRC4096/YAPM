@@ -101,12 +101,12 @@ ApplicationWindow {
     Connections
     {
         target: measurementsDialog
-        onFinished: {
-            console.log("Acceppted MeasurementDialog")
-            var tempSource = pageLoader.source
-            pageLoader.source = "" //reload loader
-            pageLoader.source = tempSource
-        }
+//        onFinished: {
+//            console.log("Acceppted MeasurementDialog")
+//            var tempSource = pageLoader.source
+//            pageLoader.source = "" //reload loader
+//            pageLoader.source = tempSource
+//        }
     }
 
 

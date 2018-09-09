@@ -2,10 +2,10 @@
 
 #include <QAbstractListModel>
 #include <vector>
+#include <QDateTime>
 
 #include "powermeasurement.h"
 
-class QDateTime;
 
 class PowerMeasurementModel : public QAbstractListModel
 {
@@ -31,19 +31,36 @@ public:
     //Custom Invokable functions
     Q_INVOKABLE void sortDescending(bool value);
     Q_INVOKABLE QVariantMap get(int row) const;
-    Q_INVOKABLE void append(QString date, QString value);
-    Q_INVOKABLE void set();
-    Q_INVOKABLE void remove();
+    Q_INVOKABLE void append(const QDateTime &date, const double value);
+    Q_INVOKABLE void set(int row, const QDateTime &date, const double value);
+    Q_INVOKABLE void remove(int row);
 
 private:
     struct DataRow{
         PwrContainer measurement;
+
+        bool operator<(const DataRow& other) const{
+            return measurement < other.measurement;
+        }
+
+        bool operator >(const DataRow& other) const {
+            return measurement > other.measurement;
+        }
+    };
+
+    struct ConvertedData{
+        double value;
+        long timestamp;
     };
 
 
+    ConvertedData convert(const QString& value, const QString& date);
     QString timestampToString(long unixTimeStamp) const;
     long stringToTimestamp(const QString& text) const;
     long dateToTimestamp(const QDateTime& date) const;
+
+    void sortData();
+    size_t findInsertionPlace(const DataRow &row);
 
     std::vector<DataRow> m_data;
 };

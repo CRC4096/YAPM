@@ -10,9 +10,21 @@ Dialog {
 
     signal finished()
 
+    property int indexOfRow: -1
+
     function createMeasurement() {
         form.valueField.text = ""
         measDialog.title = qsTr("Add Measurement");
+        indexOfRow = -1
+        measDialog.open();
+    }
+
+    function editMeasurement(index, measurement) {
+        console.log("Time of editing measurement: " + measurement.Zeit);
+        form.valueField.text = measurement.Messung
+        form.calender.selectedDate = measurement.Zeit
+        measDialog.title = qsTr("Edit Measurement");
+        indexOfRow = index;
         measDialog.open();
     }
 
@@ -31,7 +43,12 @@ Dialog {
     onAccepted: {
         var consumption = form.valueField.text
         var dateString = form.calender.selectedDate
-        PwrMsrWrapper.model.append(dateString, consumption)
+        console.log("Entered Consumption: " + consumption);
+        console.log("Selected Date: " + dateString);
+        if(indexOfRow != -1)
+            PwrMsrWrapper.model.set(indexOfRow, dateString, consumption);
+        else
+            PwrMsrWrapper.model.append(dateString, consumption)
         finished()
     }
 }

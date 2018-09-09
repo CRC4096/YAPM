@@ -66,13 +66,51 @@ ListView {
 
     }
 
-//    highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+    MeasurementDialog {
+        id: measurementsDialog
+    }
+    //    highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+    Menu {
+        id: dataMenu
+        x: parent.width / 2 - width / 2
+        y: parent.height / 2 - height / 2
+        modal: true
+
+        Label {
+            padding: 10
+            font.bold: true
+            width: parent.width
+            horizontalAlignment: Qt.AlignHCenter
+            text: qsTr("Change Entry of row " + currentIndex)
+        }
+        MenuItem {
+            text: qsTr("Edit...")
+            onTriggered: {
+                console.log("Editing triggered. Index: " + currentIndex);
+                measurementsDialog.editMeasurement(currentIndex, listView.model.get(currentIndex));
+
+            }
+        }
+        MenuItem {
+            text: qsTr("Remove")
+            onTriggered: {
+                console.log("Remove triggered. Index: " + currentIndex);
+                listView.model.remove(currentIndex);
+            }
+        }
+    }
 
     delegate: ItemDelegate {
         id: delegate
         width: listView.width
 
         checkable: true
+
+        onPressAndHold: {
+            console.log("Triggered Item delage. Current Index: " + index)
+            listView.currentIndex = index;
+            dataMenu.open()
+        }
 
         contentItem:
             RowLayout {

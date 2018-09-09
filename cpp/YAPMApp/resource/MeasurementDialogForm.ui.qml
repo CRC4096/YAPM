@@ -19,11 +19,22 @@ Item {
 
     TextField {
         id: valueField
-        placeholderText: "type in consumption"
-        inputMask: "00000 \\k\\W\\h"
         width: 200
-        text: " 0 kWh"
+        placeholderText: "type in consumption"
+        inputMask: ""
+        text: ""
+        horizontalAlignment: Text.AlignRight
+
+        anchors.right: suffixField.left
         anchors.verticalCenter: valueLabel.verticalCenter
+        anchors.rightMargin: 5
+    }
+
+    Label {
+        id: suffixField
+        text: "kWh"
+        anchors.verticalCenter: valueField.verticalCenter
+        anchors.left: valueField
         anchors.right: parent.right
         anchors.rightMargin: 20
     }
@@ -42,6 +53,6 @@ Item {
 }
 
 /*##^## Designer {
-    D{i:0;autoSize:true;height:480;width:640}
+    D{i:0;autoSize:true;height:480;width:640}D{i:2;anchors_width:200}
 }
  ##^##*/
