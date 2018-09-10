@@ -80,7 +80,6 @@ public:
      * @return
      */
     virtual bool removeAllDatapoints() = 0;
-
 };
 
 

@@ -24,7 +24,5 @@ public:
         auto interface = getInterface();
         interface.removeAllDatapoints();
     }
-
-
 };
 
