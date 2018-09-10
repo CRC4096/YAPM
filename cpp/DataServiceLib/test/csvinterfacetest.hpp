@@ -10,8 +10,8 @@
 using PowerContainer = DataContainer::Power::PowerMeasurement<DataContainer::Power::kWh>;
 using CsvInterface = YAPM::Service::Implementation::CsvPowerServiceImpl;
 
-inline CsvInterface getInterface();
-inline std::vector<PowerContainer> getData();
+CsvInterface getInterface();
+std::vector<PowerContainer> getData();
 
 //https://github.com/google/googletest/blob/master/googletest/docs/Primer.md#simple-tests
 class CsvInterfaceTest : public ::testing::Test
