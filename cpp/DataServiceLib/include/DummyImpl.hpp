@@ -12,25 +12,23 @@ namespace Implementation{
 class DummyPowerServiceImpl : public YAPM::Service::PowerMeasurmentInterface{
 public:
     DummyPowerServiceImpl();
-    ~DummyPowerServiceImpl() = default;
+    ~DummyPowerServiceImpl() override final = default;
 
     // PowerMeasurmentInterface interface
-public:
-
 private:
     std::vector<PowerMeasurement<kWh>> m_dataStorage;
 
     // PowerMeasurmentInterface interface
 public:
-    std::vector<PowerMeasurement<kWh> > getAllDataPoints() const;
-    std::vector<PowerMeasurement<kWh> > getDataPoints(long startDate, long endDate) const;
-    void addDataPoint(const PowerMeasurement<kWh> &measurement);
-    void addMultipleDataPoints(const std::vector<PowerMeasurement<kWh> > &measurements);
-    bool containsDataPoint(const PowerMeasurement<kWh> &measurement) const;
-    long countDataPoints() const;
-    long countDataPoints(long startDate, long endDate) const;
-    bool removeDataPoint(const PowerMeasurement<kWh> &measurement);
-    bool removeAllDatapoints();
+    std::vector<PowerMeasurement<kWh> > getAllDataPoints() const override final;
+    std::vector<PowerMeasurement<kWh> > getDataPoints(long startDate, long endDate) const override final;
+    void addDataPoint(const PowerMeasurement<kWh> &measurement) override final;
+    void addMultipleDataPoints(const std::vector<PowerMeasurement<kWh> > &measurements) override final;
+    bool containsDataPoint(const PowerMeasurement<kWh> &measurement) const override final;
+    long countDataPoints() const override final;
+    long countDataPoints(long startDate, long endDate) const override final;
+    bool removeDataPoint(const PowerMeasurement<kWh> &measurement) override final;
+    bool removeAllDatapoints() override final;
 };
 
 } //namespace Implementation

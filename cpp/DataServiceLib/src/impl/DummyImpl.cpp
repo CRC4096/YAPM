@@ -8,7 +8,6 @@ using namespace DataContainer::Power;
 
 DummyPowerServiceImpl::DummyPowerServiceImpl() : m_dataStorage()
 {
-
 }
 
 std::vector<PowerMeasurement<kWh> > DummyPowerServiceImpl::getAllDataPoints() const

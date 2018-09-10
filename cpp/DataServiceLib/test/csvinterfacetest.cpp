@@ -6,7 +6,6 @@ constexpr int NUMER_OF_ITEMS = 5;
 
 
 TEST_F(CsvInterfaceTest, TestLoadingAndSaving){
-
     const auto data = getData();
     {
         CsvInterface interface = getInterface();
@@ -19,8 +18,8 @@ TEST_F(CsvInterfaceTest, TestLoadingAndSaving){
             ASSERT_TRUE(interface.containsDataPoint(measurement));
         }
     }
-
 }
+
 CsvInterface getInterface()
 {
     CsvInterface retVal;

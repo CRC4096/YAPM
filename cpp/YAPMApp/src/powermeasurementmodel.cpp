@@ -40,7 +40,6 @@ QHash<int, QByteArray> PowerMeasurementModel::roleNames() const
 
 void PowerMeasurementModel::sortDescending(bool /*value*/)
 {
-
 }
 
 QVariantMap PowerMeasurementModel::get(int row) const

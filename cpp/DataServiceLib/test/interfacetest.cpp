@@ -109,7 +109,6 @@ TEST_P(InterfaceTest, TestCountDataPoint) {
     ASSERT_EQ(interface->countDataPoints( 0, 20), 4);
     ASSERT_EQ(interface->countDataPoints( 0, 25), 5);
     ASSERT_EQ(interface->countDataPoints( 0, 30), 5);
-
 }
 
 TEST_P(InterfaceTest, TestRemoveDataPoint) {
