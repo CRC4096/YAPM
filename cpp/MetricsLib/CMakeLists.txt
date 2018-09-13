@@ -2,8 +2,8 @@
 project(MetricsLib VERSION 0.1 LANGUAGES CXX)
 
 add_library(metricsLib
-    src/metricslib.cpp
- #  src/frob.cpp
+    src/MetricsService.cpp
+    src/LocalImpl.cpp
   )
 
 # Define headers for this library. PUBLIC headers are used for
@@ -17,13 +17,12 @@ target_include_directories(metricsLib PUBLIC
 # If we have compiler requirements for this library, list them
 # here
 target_compile_features(metricsLib
-    PUBLIC cxx_auto_type
-    PRIVATE cxx_variadic_templates)
+    PUBLIC cxx_std_17)
 
 # Depend on a library that we defined in the top-level file
-#target_link_libraries(lib
-#    boost
-#    MyOtherLibrary)
+target_link_libraries(metricsLib
+    dataContainerLib
+)
 
 # 'make install' to the correct locations (provided by GNUInstallDirs).
 #install(TARGETS lib EXPORT MyLibraryConfig
@@ -42,9 +41,10 @@ export(TARGETS metricsLib FILE MyLibraryConfig.cmake)
 
 # Every library has unit tests, of course
 add_executable(testMetricLib
-    test/testinterface.cpp)
+    test/main.cpp
+    test/interfacetest.cpp)
 
 target_link_libraries(testMetricLib
-    metricsLib)
+    metricsLib gtest gtest_main)
 
 add_test(testMetricLib testMetricLib)
